@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SistemaAutenticacion from './components/SistemaAutenticacion'
+import CarritoCompras from './components/CarritoCompras'
 
-function App() {
+export default function App() {
+  const [usuarioActual, setUsuarioActual] = useState(null)
+
+  const handleLoginSuccess = (usuario) => {
+    setUsuarioActual(usuario)
+  }
+
+  const handleCerrarSesion = () => {
+    setUsuarioActual(null)
+  }
+
+  // Si hay usuario logueado, mostrar la tienda
+  if (usuarioActual) {
+    return (
+      <CarritoCompras 
+        usuario={usuarioActual}
+        onCerrarSesion={handleCerrarSesion}
+      />
+    )
+  }
+
+  // Si no hay usuario, mostrar login/registro
   return (
-    <div className="App">
-      <SistemaAutenticacion />
-    </div>
+    <SistemaAutenticacion 
+      onLoginSuccess={handleLoginSuccess}
+    />
   )
 }
-
-export default App

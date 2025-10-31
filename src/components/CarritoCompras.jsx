@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { ShoppingCart, Package } from 'lucide-react'
+import { ShoppingCart, Package, User, LogOut } from 'lucide-react'
 import ProductoCard from './ProductoCard'
 import CarritoItem from './CarritoItem'
 import ResumenCarrito from './ResumenCarrito'
 import FormularioEnvio from './FormularioEnvio'
 
-export default function CarritoCompras() {
+export default function CarritoCompras({ usuario, onCerrarSesion }) {
   const [productos, setProductos] = useState([
     { id: 1, nombre: 'Laptop HP', precio: 2500000, stock: 10, imagen: '💻', categoria: 'Electrónica' },
     { id: 2, nombre: 'Mouse Logitech', precio: 80000, stock: 25, imagen: '🖱️', categoria: 'Accesorios' },
@@ -148,60 +148,215 @@ export default function CarritoCompras() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <header className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-indigo-600 p-3 rounded-lg">
-                <ShoppingCart className="text-white" size={32} />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-800">Mi Tienda Online</h1>
-                <p className="text-gray-600 text-sm">Los mejores productos al mejor precio</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-sm text-gray-600">Items en carrito</div>
-              <div className="text-2xl font-bold text-indigo-600">
-                {carrito.reduce((sum, item) => sum + item.cantidad, 0)}
-              </div>
-            </div>
+    <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+      {/* Header */}
+      <header style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        background: '#8A2BE2',
+        padding: '15px 30px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            background: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <ShoppingCart size={28} color="white" />
           </div>
-        </header>
-
-        {/* Mensajes de notificación */}
-        <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
-          {mensajes.map(m => (
-            <div 
-              key={m.id} 
-              className={`px-4 py-3 rounded-lg shadow-lg animate-slideIn ${
-                m.tipo === 'success' 
-                  ? 'bg-green-500 text-white' 
-                  : 'bg-red-500 text-white'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-lg">
-                  {m.tipo === 'success' ? '✓' : '⚠'}
-                </span>
-                <span className="font-medium">{m.texto}</span>
-              </div>
-            </div>
-          ))}
+          <div>
+            <h1 style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: '800', 
+              color: 'white',
+              marginBottom: '2px'
+            }}>
+              Mi Tienda Online
+            </h1>
+            <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.9)' }}>
+              Los mejores productos al mejor precio
+            </p>
+          </div>
         </div>
 
-        {/* Contenido principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Productos */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <Package size={24} />
-                Productos Disponibles
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ 
+              fontSize: '0.85rem', 
+              color: 'rgba(255,255,255,0.9)',
+              marginBottom: '2px'
+            }}>
+              Bienvenido
+            </div>
+            <div style={{ 
+              fontSize: '1rem', 
+              fontWeight: '700', 
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <User size={16} />
+              {usuario?.nombre || usuario?.correo || 'Usuario'}
+            </div>
+          </div>
+          <button
+            onClick={onCerrarSesion}
+            style={{
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.2s',
+              fontFamily: 'Montserrat, sans-serif'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = '#c82333'
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(220, 53, 69, 0.3)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = '#dc3545'
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = 'none'
+            }}
+          >
+            <LogOut size={18} />
+            Cerrar Sesión
+          </button>
+        </div>
+      </header>
+
+      {/* Mensajes de notificación */}
+      <div style={{
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        maxWidth: '400px'
+      }}>
+        {mensajes.map(m => (
+          <div 
+            key={m.id} 
+            style={{
+              padding: '14px 18px',
+              borderRadius: '8px',
+              fontWeight: '500',
+              animation: 'slideDown 0.3s ease',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              background: m.tipo === 'success' ? '#efe' : '#fee',
+              color: m.tipo === 'success' ? '#3c3' : '#c33',
+              border: `1px solid ${m.tipo === 'success' ? '#cfc' : '#fcc'}`
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '1.2rem' }}>
+                {m.tipo === 'success' ? '✓' : '⚠'}
+              </span>
+              <span>{m.texto}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Contenido principal */}
+      <div style={{ 
+        maxWidth: '1400px', 
+        margin: '0 auto', 
+        padding: '30px 20px' 
+      }}>
+        {/* Info del carrito */}
+        <div style={{
+          background: 'white',
+          borderRadius: '12px',
+          padding: '20px 30px',
+          marginBottom: '30px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <ShoppingCart size={32} color="#8A2BE2" />
+            <div>
+              <h2 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: '800', 
+                color: '#333',
+                marginBottom: '4px'
+              }}>
+                Carrito de Compras
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                {carrito.length === 0 
+                  ? 'Tu carrito está vacío' 
+                  : `${carrito.reduce((sum, item) => sum + item.cantidad, 0)} productos en el carrito`
+                }
+              </p>
+            </div>
+          </div>
+          {carrito.length > 0 && (
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '0.85rem', color: '#666' }}>Total</div>
+              <div style={{ 
+                fontSize: '2rem', 
+                fontWeight: '800', 
+                color: '#8A2BE2' 
+              }}>
+                ${calcularTotal().toLocaleString()}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: '1fr 400px',
+          gap: '30px',
+          alignItems: 'start'
+        }}>
+          {/* Productos y carrito */}
+          <div>
+            {/* Grid de productos */}
+            <div style={{
+              background: 'white',
+              borderRadius: '12px',
+              padding: '30px',
+              marginBottom: '30px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+            }}>
+              <h3 style={{
+                fontSize: '1.3rem',
+                fontWeight: '800',
+                color: '#333',
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                <Package size={24} color="#8A2BE2" />
+                Productos Disponibles
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+                gap: '20px'
+              }}>
                 {productos.map(p => (
                   <ProductoCard 
                     key={p.id} 
@@ -214,31 +369,53 @@ export default function CarritoCompras() {
 
             {/* Lista del carrito */}
             {carrito.length > 0 && (
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <ShoppingCart size={24} />
+              <div style={{
+                background: 'white',
+                borderRadius: '12px',
+                padding: '30px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+              }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '800',
+                  color: '#333',
+                  marginBottom: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}>
+                  <ShoppingCart size={24} color="#8A2BE2" />
                   Contenido del Carrito ({carrito.length} productos)
-                </h2>
-                <div className="space-y-3">
-                  {carrito.map(item => (
-                    <CarritoItem 
-                      key={item.id} 
-                      item={item} 
-                      modificarCantidad={modificarCantidad} 
-                      eliminarDelCarrito={eliminarDelCarrito} 
-                    />
-                  ))}
-                </div>
+                </h3>
+                {carrito.map(item => (
+                  <CarritoItem 
+                    key={item.id} 
+                    item={item} 
+                    modificarCantidad={modificarCantidad} 
+                    eliminarDelCarrito={eliminarDelCarrito} 
+                  />
+                ))}
               </div>
             )}
 
             {carrito.length === 0 && (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                <ShoppingCart className="mx-auto text-gray-300 mb-4" size={64} />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">
+              <div style={{
+                background: 'white',
+                borderRadius: '12px',
+                padding: '60px 30px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                textAlign: 'center'
+              }}>
+                <ShoppingCart size={80} color="#e0e0e0" style={{ margin: '0 auto 20px' }} />
+                <h3 style={{ 
+                  fontSize: '1.5rem', 
+                  fontWeight: '700', 
+                  color: '#666',
+                  marginBottom: '10px'
+                }}>
                   Tu carrito está vacío
                 </h3>
-                <p className="text-gray-500">
+                <p style={{ color: '#999' }}>
                   Agrega productos para comenzar tu compra
                 </p>
               </div>
@@ -246,7 +423,7 @@ export default function CarritoCompras() {
           </div>
 
           {/* Sidebar - Resumen y envío */}
-          <aside className="space-y-6">
+          <div style={{ position: 'sticky', top: '20px' }}>
             <ResumenCarrito 
               subtotal={calcularSubtotal()} 
               descuento={calcularDescuento()} 
@@ -261,24 +438,26 @@ export default function CarritoCompras() {
               setDatosEnvio={setDatosEnvio} 
               procesarCompra={procesarCompra} 
             />
-          </aside>
+          </div>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes slideIn {
+      <style>{`
+        @keyframes slideDown {
           from {
-            transform: translateX(100%);
             opacity: 0;
+            transform: translateY(-10px);
           }
           to {
-            transform: translateX(0);
             opacity: 1;
+            transform: translateY(0);
           }
         }
 
-        .animate-slideIn {
-          animation: slideIn 0.3s ease-out;
+        @media (max-width: 1024px) {
+          div[style*="gridTemplateColumns: '1fr 400px'"] {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </div>

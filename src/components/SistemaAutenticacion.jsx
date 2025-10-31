@@ -1,159 +1,179 @@
 import React, { useState } from 'react'
+import { LogIn, UserPlus, ShoppingCart, Package, Shield, TrendingUp } from 'lucide-react'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import CarritoCompras from './CarritoCompras'
-import Modal from './Modal'
-import { LogIn, UserPlus, ShoppingCart } from 'lucide-react'
 
-export default function SistemaAutenticacion() {
-  const [vista, setVista] = useState('login') // 'login' | 'registro' | 'carrito'
-  const [showModal, setShowModal] = useState(false)
-  const [usuarioActual, setUsuarioActual] = useState(null)
+export default function SistemaAutenticacion({ onLoginSuccess }) {
+  const [vista, setVista] = useState('login')
 
   const handleLogin = (datos) => {
-    setUsuarioActual(datos)
-    setVista('carrito')
+    onLoginSuccess?.(datos)
   }
 
   const handleRegister = (datos) => {
-    setUsuarioActual(datos)
-    setVista('carrito')
-  }
-
-  if (vista === 'carrito' && usuarioActual) {
-    return (
-      <div>
-        <div className="bg-indigo-600 text-white p-4 shadow-md">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <h1 className="text-xl font-bold">Bienvenido, {usuarioActual.nombre || usuarioActual.correo}</h1>
-            <button
-              onClick={() => {
-                setVista('login')
-                setUsuarioActual(null)
-              }}
-              className="bg-white text-indigo-600 px-4 py-2 rounded-lg font-semibold hover:bg-indigo-50 transition-colors"
-            >
-              Cerrar Sesión
-            </button>
-          </div>
-        </div>
-        <CarritoCompras />
-      </div>
-    )
+    onLoginSuccess?.(datos)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
-        {/* Card principal */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          {/* Header con tabs */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
-            <h1 className="text-3xl font-bold text-white text-center mb-6">
-              Mi Tienda Online
-            </h1>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setVista('login')}
-                className={`flex-1 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
-                  vista === 'login'
-                    ? 'bg-white text-indigo-600 shadow-md'
-                    : 'bg-indigo-500 text-white hover:bg-indigo-400'
-                }`}
-              >
-                <LogIn size={20} />
-                Iniciar Sesión
-              </button>
-              <button
-                type="button"
-                onClick={() => setVista('registro')}
-                className={`flex-1 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
-                  vista === 'registro'
-                    ? 'bg-white text-indigo-600 shadow-md'
-                    : 'bg-indigo-500 text-white hover:bg-indigo-400'
-                }`}
-              >
-                <UserPlus size={20} />
-                Registro
-              </button>
-            </div>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '40px 20px',
+      background: 'linear-gradient(135deg, #C8A2C8 0%, #8A2BE2 100%)',
+      fontFamily: 'Montserrat, sans-serif'
+    }}>
+      <div style={{
+        background: 'white',
+        borderRadius: '12px',
+        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+        overflow: 'hidden',
+        maxWidth: '900px',
+        width: '100%',
+        display: 'flex',
+        flexWrap: 'wrap'
+      }}>
+        {/* Panel lateral morado */}
+        <div style={{
+          background: 'linear-gradient(135deg, #8A2BE2 0%, #6A1DB2 100%)',
+          padding: '40px 30px',
+          color: 'white',
+          flex: '1',
+          minWidth: '300px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}>
+          <h1 style={{
+            fontSize: '2rem',
+            marginBottom: '16px',
+            fontWeight: '800',
+            fontFamily: 'Montserrat, sans-serif'
+          }}>
+            SKY
+          </h1>
+          <p style={{
+            fontSize: '1.1rem',
+            marginBottom: '30px',
+            opacity: '0.95',
+            fontFamily: 'Montserrat, sans-serif'
+          }}>
+            Accede a tu cuenta o crea una para adquirir los mejores productos del mercado.
+          </p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { icon: <ShoppingCart size={20} />, text: 'Carrito de compras' },
+              { icon: <Package size={20} />, text: 'Gestión de productos' },
+              { icon: <TrendingUp size={20} />, text: 'Análisis de ventas' },
+              { icon: <Shield size={20} />, text: 'Seguridad garantizada' }
+            ].map((item, idx) => (
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {item.icon}
+                </div>
+                <span style={{ fontFamily: 'Montserrat, sans-serif' }}>{item.text}</span>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Contenido del formulario */}
-          <div className="p-8">
-            {vista === 'login' ? (
-              <LoginForm 
-                onSwitch={() => setVista('registro')} 
-                onLogin={handleLogin}
-              />
-            ) : (
-              <RegisterForm 
-                onSwitch={() => setVista('login')}
-                onRegister={handleRegister}
-              />
-            )}
-          </div>
-
-          {/* Footer */}
-          <div className="bg-gray-50 px-8 py-4 border-t">
+        {/* Panel de formularios */}
+        <div style={{ flex: '1', minWidth: '300px' }}>
+          {/* Pestañas */}
+          <div style={{
+            display: 'flex',
+            gap: '8px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+            padding: '4px',
+            margin: '30px 30px 0 30px'
+          }}>
             <button
               type="button"
-              onClick={() => setShowModal(true)}
-              className="w-full text-center text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+              onClick={() => setVista('login')}
+              style={{
+                flex: 1,
+                padding: '12px 20px',
+                border: 'none',
+                background: vista === 'login' ? 'white' : 'transparent',
+                color: vista === 'login' ? '#8A2BE2' : '#666',
+                fontWeight: '600',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: vista === 'login' ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontFamily: 'Montserrat, sans-serif'
+              }}
+              onMouseEnter={e => {
+                if (vista !== 'login') e.currentTarget.style.color = '#8A2BE2'
+              }}
+              onMouseLeave={e => {
+                if (vista !== 'login') e.currentTarget.style.color = '#666'
+              }}
             >
-              ¿Necesitas ayuda?
+              <LogIn size={18} />
+              Iniciar Sesión
+            </button>
+            <button
+              type="button"
+              onClick={() => setVista('registro')}
+              style={{
+                flex: 1,
+                padding: '12px 20px',
+                border: 'none',
+                background: vista === 'registro' ? 'white' : 'transparent',
+                color: vista === 'registro' ? '#8A2BE2' : '#666',
+                fontWeight: '600',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: vista === 'registro' ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontFamily: 'Montserrat, sans-serif'
+              }}
+              onMouseEnter={e => {
+                if (vista !== 'registro') e.currentTarget.style.color = '#8A2BE2'
+              }}
+              onMouseLeave={e => {
+                if (vista !== 'registro') e.currentTarget.style.color = '#666'
+              }}
+            >
+              <UserPlus size={18} />
+              Registro
             </button>
           </div>
-        </div>
 
-        {/* Botón demo para ir directo al carrito */}
-        <div className="mt-4 text-center">
-          <button
-            type="button"
-            onClick={() => {
-              setUsuarioActual({ nombre: 'Usuario Demo', correo: 'demo@tienda.com' })
-              setVista('carrito')
-            }}
-            className="text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
-          >
-            <ShoppingCart size={20} />
-            Ir directamente a la tienda (Demo)
-          </button>
+          {/* Formularios */}
+          {vista === 'login' ? (
+            <LoginForm 
+              onSwitch={() => setVista('registro')} 
+              onLogin={handleLogin}
+            />
+          ) : (
+            <RegisterForm 
+              onSwitch={() => setVista('login')}
+              onRegister={handleRegister}
+            />
+          )}
         </div>
       </div>
-
-      {/* Modal de ayuda */}
-      {showModal && (
-        <Modal 
-          titulo="Ayuda y Soporte" 
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-        >
-          <div className="space-y-4">
-            <p className="text-gray-600">
-              Bienvenido a nuestra tienda online. Aquí puedes:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-gray-600">
-              <li>Crear una cuenta nueva</li>
-              <li>Iniciar sesión con tu cuenta</li>
-              <li>Explorar productos</li>
-              <li>Agregar productos al carrito</li>
-              <li>Aplicar cupones de descuento</li>
-              <li>Realizar compras seguras</li>
-            </ul>
-            <div className="bg-indigo-50 p-4 rounded-lg mt-4">
-              <p className="text-sm text-indigo-800 font-semibold">
-                💡 Cupones disponibles:
-              </p>
-              <ul className="text-sm text-indigo-700 mt-2 space-y-1">
-                <li>• DESCUENTO10 - 10% en compras sobre $500,000</li>
-                <li>• DESCUENTO20 - 20% en compras sobre $1,000,000</li>
-              </ul>
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   )
 }
