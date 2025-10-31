@@ -1,0 +1,464 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+}
+
+html, body, input, button, select, textarea, h1, h2, h3, h4, h5, h6, a, p, li, th, td {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* ==================== HEADER ==================== */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8A2BE2;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+header nav a:hover {
+    opacity: 0.8;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    margin-right: 20px;
+}
+
+/* ==================== CONTENEDOR PRINCIPAL ==================== */
+
+.main-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #C8A2C8 0%, #8A2BE2 100%);
+}
+
+.auth-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+}
+
+/* ==================== PANEL LATERAL ==================== */
+
+.side-panel {
+    background: linear-gradient(135deg, #8A2BE2 0%, #6A1DB2 100%);
+    padding: 40px 30px;
+    color: white;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.side-panel h1 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    font-weight: 800;
+}
+
+.side-panel p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== PANEL DE FORMULARIOS ==================== */
+
+.form-panel {
+    flex: 1;
+    padding: 40px 30px;
+}
+
+/* ==================== PESTAÑAS ==================== */
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-button.active {
+    background: white;
+    color: #8A2BE2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tab-button:hover:not(.active) {
+    color: #8A2BE2;
+}
+
+/* ==================== MENSAJES ==================== */
+
+.mensaje {
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+}
+
+.mensaje.error {
+    background-color: #fee;
+    color: #c33;
+    border: 1px solid #fcc;
+}
+
+.mensaje.exito {
+    background-color: #efe;
+    color: #3c3;
+    border: 1px solid #cfc;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== FORMULARIOS ==================== */
+
+.form-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 12px 12px 42px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #8A2BE2;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+}
+
+.input-field::placeholder {
+    color: #aaa;
+}
+
+/* Input con botón de toggle (para contraseña) */
+.input-with-toggle {
+    padding-right: 42px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.toggle-password:hover {
+    color: #8A2BE2;
+}
+
+/* ==================== BOTONES ==================== */
+
+.btn {
+    background-color: #005BAC;
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn:hover {
+    background-color: #004a93;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 91, 172, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8A2BE2 0%, #6A1DB2 100%);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #7520d0 0%, #5a189a 100%);
+}
+
+.btn-logout {
+    background-color: #dc3545;
+}
+
+.btn-logout:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ==================== PANEL DE USUARIO ==================== */
+
+.user-panel {
+    text-align: center;
+    padding: 40px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #8A2BE2 0%, #6A1DB2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 16px rgba(138, 43, 226, 0.3);
+}
+
+.user-avatar svg {
+    color: white;
+}
+
+.user-welcome {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.user-name {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.user-email {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 24px;
+}
+
+.user-info-box {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.user-info-box p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.user-info-box strong {
+    color: #333;
+}
+
+/* ==================== FOOTER ==================== */
+
+footer {
+    background-color: #8A2BE2;
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
+    margin-top: auto;
+}
+
+footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+
+    .side-panel {
+        padding: 30px 20px;
+    }
+
+    .side-panel h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-panel {
+        padding: 30px 20px;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .main-container {
+        padding: 20px;
+    }
+}
+
+/* ==================== ANIMACIONES ==================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.auth-container {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ==================== UTILIDADES ==================== */
+
+.text-center {
+    text-align: center;
+}
+
+.mb-4 {
+    margin-bottom: 16px;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.hidden {
+    display: none;
+}
