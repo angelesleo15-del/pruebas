@@ -1,6 +1,6 @@
 # Sistema de Autenticación - React + Vite
 
-Proyecto desarrollado en **React** con **Vite** para el módulo de login y registro de usuarios
+Proyecto desarrollado en **React** con **Vite**
 
 ## 🚀 Scripts disponibles
 
@@ -15,6 +15,7 @@ Proyecto desarrollado en **React** con **Vite** para el módulo de login y regis
 - Vite 5
 - Lucide React (iconos)
 - ESLint (linting y buenas prácticas)
+- Tailwind (estilos)
 
 ## 📄 Autor
-**Rubi Leo**
+**Rubí Leo**
